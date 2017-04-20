@@ -1,11 +1,23 @@
-# BasicDataStructures
+# Basic Data Structures in C++
 
-I will be updating this Git with basic data structures in C++.
+## Introduction
 
-Just for fun and  for practicing Modern C++ :)
+Hi, I will be updating this Git with some data structures using Modern C++.
 
 Why C++? Because Modern C++ is awesome!
 
 Data Structures at the moment:
 * Singly Linked List (Modern C++ Features: Smart pointers for ownership and move semantics)
+
+## Why
+This is just for fun and for practicing Modern C++ :)
+
+## Important
+These data structures are currently in the C++ Standard Library, please use the standard library http://en.cppreference.com.
+
+
+
+
+
+
 
