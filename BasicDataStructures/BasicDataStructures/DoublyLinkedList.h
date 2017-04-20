@@ -2,17 +2,17 @@
 #include <memory>
 
 // Miguel Ramirez Chacon
-// Basic Simply Linked List using smart pointers for resource management
-
+// Basic Doubly Linked List using smart pointers for resource management
 
 namespace datastructures
 {
-	
+
 	template<typename T>
 	struct Node
 	{
 		T data;
-		std::unique_ptr<Node<T>> next;
+		std::unique_ptr<Node<T>> next = nullptr;
+		Node<T>* previous = nullptr;
 
 		Node(T data) :data{ data } {}
 	};
@@ -20,7 +20,7 @@ namespace datastructures
 	template<typename T>
 	class LinkedList
 	{
-	public:		
+	public:
 
 		LinkedList(T data)
 		{
@@ -200,4 +200,5 @@ namespace datastructures
 		int counter_ = 0;
 	};
 }
+
 
