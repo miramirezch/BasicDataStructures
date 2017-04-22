@@ -2,42 +2,46 @@
 #include <memory>
 
 // Miguel Ramirez Chacon
-// Basic Doubly Linked List using smart pointers for resource management
+// 22/04/17
+// Modern C++ Practice:
+// Basic Doubly Linked List
+// Smart pointers for resource management
+// Move Semantics
 
 namespace datastructures
 {
 
 	template<typename T>
-	struct Node
+	struct DoublyNode
 	{
 		T data;
-		std::unique_ptr<Node<T>> next = nullptr;
-		Node<T>* previous = nullptr;
+		std::unique_ptr<DoublyNode<T>> next = nullptr;
+		DoublyNode<T>* previous = nullptr;
 
-		Node(T data) :data{ data } {}
+		DoublyNode(T data) :data{ data }, next{ nullptr }, previous{ nullptr } {}
 	};
 
 	template<typename T>
-	class LinkedList
+	class DoublyLinkedList
 	{
 	public:
 
-		LinkedList(T data)
+		DoublyLinkedList(T data)
 		{
-			head_ = std::make_unique<Node<T>>(data);
+			head_ = std::make_unique<DoublyNode<T>>(data);
 			tail_ = head_.get();
 			counter_++;
 		}
 
-		LinkedList(const LinkedList& other) = delete;
-		LinkedList& operator=(const LinkedList& other) = delete;
+		DoublyLinkedList(const DoublyLinkedList& other) = delete;
+		DoublyLinkedList& operator=(const DoublyLinkedList& other) = delete;
 
-		LinkedList(LinkedList&& other) :counter_{ other.Count() }, head_{ std::move(other.head_) }, tail_{ other.tail_ }
+		DoublyLinkedList(DoublyLinkedList&& other) :counter_{ other.Count() }, head_{ std::move(other.head_) }, tail_{ other.tail_ }
 		{
 			other.counter_ = 0;
 		}
 
-		LinkedList& operator=(LinkedList&& other)
+		DoublyLinkedList& operator=(DoublyLinkedList&& other)
 		{
 			if (this != &other)
 			{
@@ -54,10 +58,10 @@ namespace datastructures
 			return *this;
 		}
 
-		LinkedList& AddFirst(T data)
+		DoublyLinkedList& AddFirst(T data)
 		{
-			std::unique_ptr<Node<T>> temp = std::move(head_);
-			head_ = std::make_unique<Node<T>>(data);
+			auto temp = std::move(head_);
+			head_ = std::make_unique<DoublyNode<T>>(data);
 
 			if (!counter_)
 			{
@@ -66,28 +70,29 @@ namespace datastructures
 			else
 			{
 				head_->next = std::move(temp);
+				head_->next->previous = head_.get();
 			}
 
 			counter_++;
 			return *this;
 		}
 
-		LinkedList& AddLast(T data)
+		DoublyLinkedList& AddLast(T data)
 		{
-			auto temp = std::make_unique<Node<T>>(data);
+			auto temp = std::make_unique<DoublyNode<T>>(data);
 
 			if (!counter_)
 			{
 				head_ = std::move(temp);
-				tail_ = head_.get();
-				counter_++;
+				tail_ = head_.get();				
 			}
 			else
 			{
 				tail_->next = std::move(temp);
-				tail_ = tail_->next.get();
-				counter_++;
+				tail_->next->previous = tail_;
+				tail_ = tail_->next.get();				
 			}
+			counter_++;
 			return *this;
 		}
 
@@ -127,10 +132,10 @@ namespace datastructures
 			if (!counter_)
 				return false;
 
-			Node<T>* previous = nullptr;
-			auto current = head_.get();
+			DoublyNode<T>* previous = nullptr;
+			auto current = head_.get();	
 
-			if (current->data == value)
+			if (current->data == value && current->next == nullptr)
 			{
 				head_ = nullptr;
 				tail_ = nullptr;
@@ -145,12 +150,20 @@ namespace datastructures
 					if (current->next == nullptr)
 					{
 						previous->next = nullptr;
+						tail_ = previous;
 					}
 					else
 					{
-						Node<T>* next_pointer = current->next.release();
-						previous->next = nullptr;
-						previous->next = std::unique_ptr<Node<T>>(next_pointer);
+						if (previous)
+						{							
+							previous->next = std::move(current->next);
+							previous->next->previous = previous;
+						}
+						else
+						{							
+							head_ = std::move(current->next);
+							head_->next->previous = head_.get();
+						}										
 					}
 					counter_--;
 					return true;
@@ -168,7 +181,7 @@ namespace datastructures
 				return false;
 
 			int iterations{ 0 };
-			Node<T>* previous = nullptr;
+			DoublyNode<T>* previous = nullptr;
 			auto current = head_.get();
 
 			while (iterations != position)
@@ -184,10 +197,9 @@ namespace datastructures
 				tail_ = nullptr;
 			}
 			else
-			{
-				Node<T>* next_pointer = current->next.release();
-				previous->next = nullptr;
-				previous->next = std::unique_ptr<Node<T>>(next_pointer);
+			{				
+				previous->next = std::move(current->next);
+				previous->next->previous = previous;				
 			}
 			counter_--;
 			return true;
@@ -195,8 +207,8 @@ namespace datastructures
 
 
 	private:
-		std::unique_ptr<Node<T>> head_ = nullptr;
-		Node<T>* tail_ = nullptr;
+		std::unique_ptr<DoublyNode<T>> head_ = nullptr;
+		DoublyNode<T>* tail_ = nullptr;
 		int counter_ = 0;
 	};
 }

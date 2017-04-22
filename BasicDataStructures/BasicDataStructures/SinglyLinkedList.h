@@ -2,19 +2,23 @@
 #include <memory>
 
 // Miguel Ramirez Chacon
-// Basic Simply Linked List using smart pointers for resource management
+// 22/04/17
+// Modern C++ Practice:
+// Basic Simply Linked List
+// Smart pointers for resource management
+// Move Semantics
 
 
 namespace datastructures
 {
 	
 	template<typename T>
-	struct Node
+	struct SinglyNode
 	{
 		T data;
-		std::unique_ptr<Node<T>> next;
+		std::unique_ptr<SinglyNode<T>> next;
 
-		Node(T data) :data{ data } {}
+		SinglyNode(T data) :data{ data } {}
 	};
 
 	template<typename T>
@@ -24,7 +28,7 @@ namespace datastructures
 
 		LinkedList(T data)
 		{
-			head_ = std::make_unique<Node<T>>(data);
+			head_ = std::make_unique<SinglyNode<T>>(data);
 			tail_ = head_.get();
 			counter_++;
 		}
@@ -35,6 +39,7 @@ namespace datastructures
 		LinkedList(LinkedList&& other) :counter_{ other.Count() }, head_{ std::move(other.head_) }, tail_{ other.tail_ }
 		{
 			other.counter_ = 0;
+			other.tail_ = nullptr;
 		}
 
 		LinkedList& operator=(LinkedList&& other)
@@ -56,17 +61,14 @@ namespace datastructures
 
 		LinkedList& AddFirst(T data)
 		{
-			std::unique_ptr<Node<T>> temp = std::move(head_);
-			head_ = std::make_unique<Node<T>>(data);
+			auto temp = std::move(head_);			
+			head_ = std::make_unique<SinglyNode<T>>(data);
+			head_->next = std::move(temp);
 
 			if (!counter_)
 			{
 				tail_ = head_.get();
-			}
-			else
-			{
-				head_->next = std::move(temp);
-			}
+			}			
 
 			counter_++;
 			return *this;
@@ -74,20 +76,19 @@ namespace datastructures
 
 		LinkedList& AddLast(T data)
 		{
-			auto temp = std::make_unique<Node<T>>(data);
+			auto temp = std::make_unique<SinglyNode<T>>(data);
 
 			if (!counter_)
 			{
 				head_ = std::move(temp);
-				tail_ = head_.get();
-				counter_++;
+				tail_ = head_.get();				
 			}
 			else
 			{
 				tail_->next = std::move(temp);
-				tail_ = tail_->next.get();
-				counter_++;
+				tail_ = tail_->next.get();				
 			}
+			counter_++;
 			return *this;
 		}
 
@@ -127,10 +128,10 @@ namespace datastructures
 			if (!counter_)
 				return false;
 
-			Node<T>* previous = nullptr;
-			auto current = head_.get();
+			SinglyNode<T>* previous = nullptr;
+			auto current = head_.get();	
 
-			if (current->data == value)
+			if (current->data == value && current->next == nullptr)
 			{
 				head_ = nullptr;
 				tail_ = nullptr;
@@ -145,12 +146,20 @@ namespace datastructures
 					if (current->next == nullptr)
 					{
 						previous->next = nullptr;
+						tail_ = previous;
 					}
 					else
 					{
-						Node<T>* next_pointer = current->next.release();
-						previous->next = nullptr;
-						previous->next = std::unique_ptr<Node<T>>(next_pointer);
+						if (previous)
+						{
+							previous->next = std::move(current->next);
+
+						}
+						else
+						{
+							head_ = std::move(current->next);
+						}
+						
 					}
 					counter_--;
 					return true;
@@ -168,8 +177,16 @@ namespace datastructures
 				return false;
 
 			int iterations{ 0 };
-			Node<T>* previous = nullptr;
+			SinglyNode<T>* previous = nullptr;
 			auto current = head_.get();
+
+			if (current->next == nullptr)
+			{
+				head_ = nullptr;
+				tail_ = nullptr;
+				counter_--;
+				return true;
+			}
 
 			while (iterations != position)
 			{
@@ -180,14 +197,14 @@ namespace datastructures
 
 			if (current->next == nullptr)
 			{
-				head_ = nullptr;
-				tail_ = nullptr;
+				previous->next = nullptr;
+				tail_ = previous;				
 			}
 			else
-			{
-				Node<T>* next_pointer = current->next.release();
+			{				
+				auto next_pointer = current->next.release();
 				previous->next = nullptr;
-				previous->next = std::unique_ptr<Node<T>>(next_pointer);
+				previous->next = std::unique_ptr<SinglyNode<T>>(next_pointer);
 			}
 			counter_--;
 			return true;
@@ -195,8 +212,8 @@ namespace datastructures
 
 
 	private:
-		std::unique_ptr<Node<T>> head_ = nullptr;
-		Node<T>* tail_ = nullptr;
+		std::unique_ptr<SinglyNode<T>> head_ = nullptr;
+		SinglyNode<T>* tail_ = nullptr;
 		int counter_ = 0;
 	};
 }
