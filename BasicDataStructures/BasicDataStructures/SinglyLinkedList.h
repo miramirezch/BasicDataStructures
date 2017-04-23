@@ -172,7 +172,7 @@ namespace datastructures
 			return false;
 		}
 
-		bool DeleteAt(unsigned position)
+		bool DeleteAt(int position)
 		{
 			if (position >= counter_ || counter_ == 0)
 				return false;
