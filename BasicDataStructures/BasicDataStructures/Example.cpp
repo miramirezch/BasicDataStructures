@@ -1,5 +1,6 @@
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
+#include "Stack.h"
 #include <iostream>
 #include <vector>
 using namespace datastructures;
@@ -91,6 +92,24 @@ int main()
 	dlist.Delete(110);
 	dlist.Delete(200);
 	dlist.Delete(838383);
+
+	//--------------------------------------------------------------------------
+	// Stack
+
+	Stack<double> s;
+	s.Push(3).Push(2).Push(1);
+
+	std::cout << s.Top() << std::endl;
+
+	s.Pop().Pop().Pop().Pop().Pop();
+
+	s.Push(10);
+
+	std::cout << s.Top() << std::endl;
+
+
+
+
 
 	getchar();
 	return 0;
