@@ -96,21 +96,18 @@ int main()
 	//--------------------------------------------------------------------------
 	// Stack
 
+	// Create a new stack
 	Stack<double> s;
+
+	// Push some values
 	s.Push(3).Push(2).Push(1);
 
+	// Print element on the top of the stack
 	std::cout << s.Top() << std::endl;
 
+	// Pop some values
 	s.Pop().Pop().Pop().Pop().Pop();
-
-	s.Push(10);
-
-	std::cout << s.Top() << std::endl;
-
-
-
-
-
+	
 	getchar();
 	return 0;
 
