@@ -1,6 +1,7 @@
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
-#include "Stack.h"
+#include "StackL.h"
+#include "StackV.h"
 #include <iostream>
 #include <vector>
 using namespace datastructures;
@@ -95,9 +96,8 @@ int main()
 
 	//--------------------------------------------------------------------------
 	// Stack
-
-	// Create a new stack
-	Stack<double> s;
+	// Create a new stack - List based
+	StackL<double> s;
 
 	// Push some values
 	s.Push(3).Push(2).Push(1);
@@ -107,6 +107,17 @@ int main()
 
 	// Pop some values
 	s.Pop().Pop().Pop().Pop().Pop();
+
+	//--------------------------------------------------------------------------
+	// Stack
+	// Create a new stack - Vector based
+	StackV<int> s2;
+
+	s2.Push(1).Push(2).Push(3);
+	std::cout << s2.Top() << std::endl;
+	s2.Pop().Pop().Pop();
+
+
 	
 	getchar();
 	return 0;

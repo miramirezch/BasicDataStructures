@@ -21,7 +21,10 @@
     <ClInclude Include="DoublyLinkedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stack.h">
+    <ClInclude Include="StackL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StackV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,20 +1,26 @@
 #pragma once
 #include<list>
 
+// Miguel Ramirez Chacon
+// 22/04/17
+// Modern C++ Practice:
+// Basic Stack - List Based
+// Fluent Interface
+
 namespace datastructures
 {
 	template<typename T>
-	class Stack
+	class StackL
 	{
 	public:
-		Stack& Push(T value)
+		StackL& Push(T value)
 		{
 			lista_.push_front(value);
 			count_++;
 			return *this;
 		}
 
-		Stack& Pop()
+		StackL& Pop()
 		{
 			if (count_>0)
 			{				
