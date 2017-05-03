@@ -7,13 +7,7 @@ namespace datastructures
 	template<typename T>
 	struct BSTNode
 	{
-		BSTNode(T value) :data{ value } {}
-
-		~BSTNode()
-		{
-			std::cout << "Destructing data: " << data << '\n';
-		}
-
+		BSTNode(T value) :data{ value } {}		
 		T data;
 		std::unique_ptr<BSTNode<T>> left = nullptr;
 		std::unique_ptr<BSTNode<T>> right = nullptr;
@@ -27,7 +21,7 @@ namespace datastructures
 		BST(const BST& other) = delete;
 		BST& operator=(const BST& other) = delete;
 
-		void Add(T value)
+		BST& Add(T value)
 		{
 			auto current = root_.get();
 
@@ -39,6 +33,55 @@ namespace datastructures
 			{
 				root_ = std::make_unique<BSTNode<T>>(value);
 				count_++;
+			}
+
+			return *this;
+		}
+
+		bool Search(T value)
+		{
+			if (root_)
+			{
+				return Search(root_.get(), value);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		bool Search(BSTNode<T>* current, T value)
+		{
+			if (current->data == value)
+			{
+				return true;
+			}
+
+			else
+			{
+				if (value < current->data)
+				{
+					if (current->left)
+					{
+						return Search(current->left.get(), value);
+					}
+					else
+					{
+						return false;
+					}
+				}
+
+				else
+				{
+					if (current->right)
+					{
+						return Search(current->right.get(), value);
+					}
+					else
+					{
+						return false;
+					}
+				}
 			}
 		}
 
@@ -140,7 +183,6 @@ namespace datastructures
 	private:
 		int count_ = 0;
 		std::unique_ptr<BSTNode<T>> root_ = nullptr;
-
 	};
 
 

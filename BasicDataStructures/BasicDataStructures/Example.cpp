@@ -23,14 +23,14 @@ int main()
 	std::cout << "Singly Linked List" << '\n';
 
 	//Create a Linked List
-	LinkedList<int> list(30);	
+	LinkedList<int> list(30);
 
 	//Add some elements at the head of the list
 	list.AddFirst(40).AddFirst(50);
 
 	//Add some elements at the tail of the list
 	list.AddLast(60).AddLast(70).AddLast(80);
-	
+
 	//Get total elements
 	list.Count();
 
@@ -56,7 +56,7 @@ int main()
 
 	//Create a vector of list
 	std::vector<LinkedList<double>> vector_list;
-	
+
 	//Insert a list in a vector - Only throw move
 	LinkedList<double> list2(500);
 	list2.AddLast(1000).AddFirst(200).AddLast(500);
@@ -77,7 +77,7 @@ int main()
 
 	//Add some elements at the head of the list
 	dlist.AddFirst(110).AddFirst(200).AddFirst(300);
-	
+
 	// Print the elements of the list
 	dlist.Print();
 
@@ -119,32 +119,27 @@ int main()
 	std::cout << s2.Top() << std::endl;
 	s2.Pop().Pop().Pop();
 
-	
+	//--------------------------------------------------------------------------
+	// Binary Search Tree
 
-	{
-		BST<std::string> test;
-		test.Add("abracadabra");
-		test.Add("bracadabra");
-		test.Add("racadabra");
-		test.Add("acadabra");
-		test.Add("cadabra");
-		test.Add("adabra");
-		test.Add("dabra");
+	BST<std::string> bst;
+	bst.Add("abracadabra").Add("bracadabra").Add("racadabra").Add("acadabra").Add("cadabra");
 
-		std::cout << "-------------------------" << '\n';
-		test.PreOrder();
-		std::cout << "-------------------------" << '\n';
-		test.InOrder();
-		std::cout << "-------------------------" << '\n';
-		test.PostOrder();
+	BST<int> bst2;
+	bst2.Add(4).Add(2).Add(6).Add(1).Add(3).Add(5).Add(7);
 
-	}
-	
+	// PreOrder/ InOrder / PostOrder
+	std::cout << "-------------------------" << '\n';
+	bst.PreOrder();
+	std::cout << "-------------------------" << '\n';
+	bst.InOrder();
+	std::cout << "-------------------------" << '\n';
+	bst.PostOrder();
 
-	
-	
-	
-	
+	// Searching Elements
+	std::cout<<bst.Search("abracadabra")<<'\n';
+	std::cout << bst2.Search(3) << '\n';
+
 	getchar();
 	return 0;
 
