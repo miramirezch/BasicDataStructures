@@ -111,6 +111,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="SinglyLinkedList.h" />
     <ClInclude Include="StackL.h" />

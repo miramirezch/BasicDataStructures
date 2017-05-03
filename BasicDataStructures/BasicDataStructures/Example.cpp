@@ -2,8 +2,10 @@
 #include "DoublyLinkedList.h"
 #include "StackL.h"
 #include "StackV.h"
+#include "BinarySearchTree.h"
 #include <iostream>
 #include <vector>
+#include <string>
 using namespace datastructures;
 
 // Miguel Ramirez Chacon
@@ -117,7 +119,31 @@ int main()
 	std::cout << s2.Top() << std::endl;
 	s2.Pop().Pop().Pop();
 
+	
 
+	{
+		BST<std::string> test;
+		test.Add("abracadabra");
+		test.Add("bracadabra");
+		test.Add("racadabra");
+		test.Add("acadabra");
+		test.Add("cadabra");
+		test.Add("adabra");
+		test.Add("dabra");
+
+		std::cout << "-------------------------" << '\n';
+		test.PreOrder();
+		std::cout << "-------------------------" << '\n';
+		test.InOrder();
+		std::cout << "-------------------------" << '\n';
+		test.PostOrder();
+
+	}
+	
+
+	
+	
+	
 	
 	getchar();
 	return 0;
