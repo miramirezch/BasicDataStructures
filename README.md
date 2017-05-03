@@ -10,6 +10,7 @@ Data Structures at the moment:
 * Singly Linked List (Features: Smart pointers for ownership, move semantics, fluent interface)
 * Doubly Linked List (Features: Smart pointers for ownership, move semantics, fluent interface)
 * Stack - List and Vector Based (Features: Fluent interface)
+* Binary Search Tree (Features: Smart pointers for ownership, move semantics, fluent interface)
 
 ## Why
 This is just for fun and for practicing Modern C++ :)
