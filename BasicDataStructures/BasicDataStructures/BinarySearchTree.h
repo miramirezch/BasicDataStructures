@@ -2,6 +2,14 @@
 #include <memory>
 #include<iostream>
 
+// Miguel Ramirez Chacon
+// 05/02/17
+// Modern C++ Practice:
+// Binary Search Tree
+// Smart pointers for resource management
+// Move Semantics
+// Fluent Interface
+
 namespace datastructures
 {
 	template<typename T>
@@ -20,6 +28,28 @@ namespace datastructures
 		BST() {}
 		BST(const BST& other) = delete;
 		BST& operator=(const BST& other) = delete;
+
+		BST(const BST&& other) :count_{ other.count_ }, root_{ std::move(other.root_) }
+		{
+			other.count_ = 0;
+		}
+
+		BST& operator=(const BST&& other)
+		{
+			if (this != &other)
+			{
+				count_ = 0;
+				root_ = nullptr;
+				count_ = other.count_;
+				root_ = std::move(other.root_);
+
+				other.count_ = 0;
+				other.root_ = nullptr;				
+			}
+
+			return *this;
+		}
+
 
 		BST& Add(T value)
 		{

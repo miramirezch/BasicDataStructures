@@ -2,7 +2,7 @@
 #include<list>
 
 // Miguel Ramirez Chacon
-// 22/04/17
+// 04/22/17
 // Modern C++ Practice:
 // Basic Stack - List Based
 // Fluent Interface

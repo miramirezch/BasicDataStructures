@@ -9,11 +9,10 @@
 using namespace datastructures;
 
 // Miguel Ramirez Chacon
-// 22/04/17
 // Modern C++ Practice:
-// Test for Singly and Doubly linked lists
+// Test for Basic Data Structures
 // Smart pointers for resource management
-// Move Semantics
+// Move Semantics and Fluent Interface
 
 int main()
 {

@@ -2,7 +2,7 @@
 #include <memory>
 
 // Miguel Ramirez Chacon
-// 22/04/17
+// 04/22/17
 // Modern C++ Practice:
 // Basic Doubly Linked List
 // Smart pointers for resource management
